@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <title>SUMMA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
@@ -17,8 +22,46 @@
     <!-- https://v1.tailwindcss.com/components/forms -->
     <!-- https://flowbite.com/docs/components/navbar/ -->
     <!-- https://tailwindcomponents.com/component/responsive-navbar-with-dropdown -->
-
+    <!-- https://github.com/jspreadsheet/ce -->
+    <!-- https://www.chartjs.org/docs/latest/samples/information.html -->
     
+    <!-- Chart JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- JExcel -->
+    <script src="https://bossanova.uk/jspreadsheet/v4/jexcel.js"></script>
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+    <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
+
+    <script>
+        const labels = [
+          'January',
+          'February',
+          'March',
+          'April',
+          'May',
+          'June',
+        ];
+      
+        const data = {
+          labels: labels,
+          datasets: [{
+            label: 'My First dataset',
+            backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+            data: [0, 10, 5, 2, 20, 30, 45],
+          }]
+        };
+      
+        const config = {
+          type: 'line',
+          data: data,
+          options: {}
+        };
+      </script>
+
 </head>
 
 <body>
@@ -124,7 +167,7 @@
                         Valor
                     </label>
                     <input
-                        name="value" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        name="value" id="value" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         type="text" placeholder="1,000,000">
                 </div>
 
@@ -140,7 +183,7 @@
                         Meses de financiamiento
                     </label>
                     <input
-                        name="months" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        id="months" name="months" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         type="text" placeholder="36">
                 </div>
 
@@ -202,11 +245,32 @@
             
             <!-- <h2>Test</h2> -->
         
-            <input type="submit" value="Calcular" class="uppercase font-bold">
+            <!-- <input id="calculate" type="submit" value="Calcular" class="uppercase font-bold"> -->
 
         </form>
 
+        <button id="calculate" class="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mb-6">
+            Calcular
+        </button>
+
+        <!-- -------------------------------- Chart -------------------------------- -->
+
+        <div>
+            <canvas id="myChart"></canvas>
+          </div>
+
+        <!-- -------------------------------- Table -------------------------------- -->
+    
+        <div id="spreadsheet"></div>
+
     </div>
+
+    <script>
+        const myChart = new Chart(
+          document.getElementById('myChart'),
+          config
+        );
+      </script>
 
 </body>
 
