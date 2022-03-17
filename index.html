@@ -13,8 +13,8 @@
     <title>SUMMA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="data.js"></script>
-    <script src="main.js"></script>
+    <script type="text/javascript" src="data.js" defer></script>
+    <script src="main.js" defer></script>
 
     <!-- https://tailwindcss-custom-forms.netlify.app/ -->
     <!-- https://tailwind-elements.com/docs/standard/forms/radio/ -->
@@ -34,33 +34,6 @@
 
     <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
     <link rel="stylesheet" href="https://bossanova.uk/jspreadsheet/v4/jexcel.css" type="text/css" />
-
-    <script>
-        const labels = [
-          'January',
-          'February',
-          'March',
-          'April',
-          'May',
-          'June',
-        ];
-      
-        const data = {
-          labels: labels,
-          datasets: [{
-            label: 'My First dataset',
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data: [0, 10, 5, 2, 20, 30, 45],
-          }]
-        };
-      
-        const config = {
-          type: 'line',
-          data: data,
-          options: {}
-        };
-      </script>
 
 </head>
 
@@ -123,7 +96,7 @@
             tiempo.</p>
 
 
-        <form>
+        <form autocomplete="off">
 
             <!-- <label class="block mt-4"> -->
             <!-- <span class="text-gray-700">Tipo de activo</span>
@@ -257,20 +230,13 @@
 
         <div>
             <canvas id="myChart"></canvas>
-          </div>
+        </div>
 
         <!-- -------------------------------- Table -------------------------------- -->
     
         <div id="spreadsheet"></div>
 
     </div>
-
-    <script>
-        const myChart = new Chart(
-          document.getElementById('myChart'),
-          config
-        );
-      </script>
 
 </body>
 
