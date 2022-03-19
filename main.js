@@ -3,6 +3,9 @@ var list = document.getElementById("assetTypes");
 let select = document.getElementById('currency');
 let exchange = document.getElementById('exchange');
 let calc = document.getElementById("calculate");
+let myChart = [];
+let gxdata = [];
+let gydata = [];
 
 // Add each type of asset to the html list
 for (const type of assetType) {
@@ -28,7 +31,8 @@ calc.addEventListener('click', () => {
 
     // Delete a any content created inside the spreadsheet  
     document.getElementById('spreadsheet').innerHTML = '';
-
+    gdata = [];
+    
     // Declare variables for calculus based on data
     let dc = 1 - assetType[0].dc,
         di = 1 - assetType[0].di,
@@ -40,13 +44,21 @@ calc.addEventListener('click', () => {
     let v = document.getElementById('value').value,
         p = document.getElementById('months').value;
 
+
+    // data variable for table
     let data = [];
+
+    // data variable for graph
+    gxdata = [];
+    gydata = [];
 
     // Generate data and push it into the data variable
     for (let i = 0; i <= p; i++) {
         let pval = (di - dm) * Math.exp(-i * f) + dm;
         let val = pval * v;
         data.push([i, pval, val]);
+        gxdata.push(i);
+        gydata.push(val.toFixed(2));
     }
 
     // Generate the table
@@ -60,37 +72,52 @@ calc.addEventListener('click', () => {
     });
 
     /* ------------------------------ Create chart ------------------------------ */
-    const myChart = new Chart(
-        document.getElementById('myChart'),
-        config
-    );
+    var graphArea = document.getElementById("chart").getContext("2d");
+    if ('canvas' in myChart){
+        myChart.data.labels = gxdata;
+        myChart.data.datasets[0].data = gydata;
+        myChart.update();
+    } else {
+        myChart = new Chart(graphArea, {
+            type: 'line',
+            data: {
+                labels: gxdata,
+                datasets: [{
+                    label: 'Método exponencial',
+                    data: gydata,
+                    borderColor: '#1f3d64',
+                    backgroundColor: '#448454',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'Valor de activo en el tiempo'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Mes'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Valor en Quetzales'
+                        }
+                    }
+                }
+            }
+        });
+    }
+    console.log(myChart);
 });
-
-
-
-/* ----------------------------- Chart settings ----------------------------- */
-
-const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-];
-
-const data = {
-    labels: labels,
-    datasets: [{
-        label: 'My First dataset',
-        backgroundColor: 'rgb(255, 99, 132)',
-        borderColor: 'rgb(255, 99, 132)',
-        data: [0, 10, 5, 2, 20, 30, 45],
-    }]
-};
-
-const config = {
-    type: 'line',
-    data: data,
-    options: {}
-};
