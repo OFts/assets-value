@@ -2,7 +2,11 @@
 var list = document.getElementById("assetTypes");
 let select = document.getElementById('currency');
 let exchange = document.getElementById('exchange');
+let con = document.getElementById("condition");
 let calc = document.getElementById("calculate");
+let cContainer = document.getElementById("chartContainer");
+let sContainer = document.getElementById("spreadsheetContainer");
+let uContainer = document.getElementById("usedCondition")
 let myChart = [];
 let gxdata = [];
 let gydata = [];
@@ -18,7 +22,7 @@ for (const type of assetType) {
 
 // Show currency exchange if Dollars is selected
 select.addEventListener('change', () => {
-    if (select.value == "US Dollars - $") {
+    if (select.value == "d") {
         exchange.style.display = "block";
     }
     else {
@@ -26,8 +30,43 @@ select.addEventListener('change', () => {
     }
 });
 
+// Display used functionality
+con.addEventListener('change', () => {
+    if (con.value == "used") {
+        uContainer.style.display = "flex";
+        if (document.getElementById("criteria").value == "monthsUsed"){
+            document.getElementById("refLabel").innerHTML = "Antigüedad en meses";
+            document.getElementById("valReference").placeholder = "Cantidad de meses";
+        } else {
+            document.getElementById("refLabel").innerHTML = "Valor en estado nuevo";
+            document.getElementById("valReference").placeholder = "Valor en quetzales";
+        }
+    }
+    else {
+        uContainer.style.display = "none";
+    }
+});
+
+document.getElementById("criteria").addEventListener('change', ()=>{
+    if (document.getElementById("criteria").value == "monthsUsed"){
+        document.getElementById("refLabel").innerHTML = "Antigüedad en meses";
+        document.getElementById("valReference").placeholder = "Cantidad de meses";
+    } else {
+        document.getElementById("refLabel").innerHTML = "Valor en estado nuevo";
+        document.getElementById("valReference").placeholder = "Valor en quetzales";
+    }
+});
+
+// Show asset type info
+list.addEventListener('change', ()=>{
+
+});
+
 // Calculate action
 calc.addEventListener('click', () => {
+
+    cContainer.style.display = "block";
+    sContainer.style.display = "block";
 
     // Delete a any content created inside the spreadsheet  
     document.getElementById('spreadsheet').innerHTML = '';
@@ -119,5 +158,4 @@ calc.addEventListener('click', () => {
             }
         });
     }
-    console.log(myChart);
 });

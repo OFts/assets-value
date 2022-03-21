@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- 
+ ______     __  __     __    __     __    __     ______    
+/\  ___\   /\ \/\ \   /\ "-./  \   /\ "-./  \   /\  __ \   
+\ \___  \  \ \ \_\ \  \ \ \-./\ \  \ \ \-./\ \  \ \  __ \  
+ \/\_____\  \ \_____\  \ \_\ \ \_\  \ \_\ \ \_\  \ \_\ \_\ 
+  \/_____/   \/_____/   \/_/  \/_/   \/_/  \/_/   \/_/\/_/                                                       
 
+Developed by OFts🔥
+-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -92,24 +100,10 @@
             VALOR DE ACTIVOS EN EL TIEMPO
         </h1>
 
-        <p class="my-12 text-gray-700">Esta calculadora para la depreciación de activos calcula el valor de mercado del activo en el
-            tiempo.</p>
-
+        <p class="my-12 text-gray-700">La siguiente herramiento realiza un análisis cuantitativo del valor aproximado de un activo en el tiempo. Este análisis se basa en valores del mercado primario y secundario, tanto nacional como internacional de distintos tipos de activos. <br>
+        <b>Importante:</b> El análisis realizado comprende únicamente una aproximación y sus valores pueden variar según el mercado, la naturaleza específica del activo, así como su estado.</p>
 
         <form autocomplete="off">
-
-            <!-- <label class="block mt-4"> -->
-            <!-- <span class="text-gray-700">Tipo de activo</span>
-                    <select name="assetTypes" id="assetTypes" class="form-select mt-1 block w-full">
-                        <option value="Animal">Animal</option>
-                    </select> -->
-            <!-- <select name="assetTypes" id="assetTypes" class="block appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                        <option>New Mexico</option>
-                        <option>Missouri</option>
-                        <option>Texas</option>
-                    </select>
-                </label> -->
-
 
             <div class="flex flex-wrap -mx-3 mb-6">
 
@@ -166,10 +160,10 @@
                         Condición del bien
                     </label>
                     <div class="relative">
-                        <select id="used"
+                        <select id="condition"
                             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>NO es un bien usado</option>
-                            <option>SI es un bien usado</option>
+                            <option value = "new">Es un bien NUEVO</option>
+                            <option value = "used">Es un bien USADO</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -182,7 +176,41 @@
             </div>
 
             <!-- Third row -->
-        
+            
+            <div id="usedCondition" class="hidden flex-wrap -mx-3 mb-6">
+                <!-- Criterio seleccionado -->
+                <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                    <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Criterio de estimación
+                    </label>
+                    <div class="relative">
+                        <select id="criteria"
+                            class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+                            <option value = "monthsUsed">Antigüedad en meses</option>
+                            <option value = "valueNew">Valor como nuevo</option>
+                        </select>
+                        <div
+                            class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Valor del criterio -->
+                <div class="w-full md:w-1/2 px-3">
+                    <label id="refLabel" class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        Meses o valor inicial
+                    </label>
+                    <input
+                        id="valReference" name="months" class="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                        type="text">
+                </div>
+
+            </div>
+
+            <!-- Forth row -->
             <div class="flex flex-wrap -mx-3 mb-6">
 
                 <!-- Currency -->
@@ -193,8 +221,8 @@
                     <div class="relative">
                         <select id="currency"
                             class="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option>GT Quetzales - Q</option>
-                            <option>US Dollars - $</option>
+                            <option value="q">GT Quetzales - Q</option>
+                            <option value="d">US Dollars - $</option>
                         </select>
                         <div
                             class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
@@ -229,15 +257,22 @@
         <!-- -------------------------------- Chart -------------------------------- -->
 
         
-        <div>
+        <div id="chartContainer" class="hidden">
+            <h1 class="text-center text-3xl font-bold my-12 text-gray-700">
+                GRÁFICO DE VALOR
+            </h1>
             <canvas id="chart"></canvas>
         </div>
 
         <!-- -------------------------------- Table -------------------------------- -->
         
-        
+        <div id="spreadsheetContainer" class="hidden">
+            <h1 class="text-center text-3xl font-bold my-12 text-gray-700">
+                TABLA DE VALOR
+            </h1>
+            <div id="spreadsheet"></div>
+        </div>
 
-        <div id="spreadsheet"></div>
 
     </div>
 
