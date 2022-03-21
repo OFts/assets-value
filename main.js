@@ -6,7 +6,9 @@ let con = document.getElementById("condition");
 let calc = document.getElementById("calculate");
 let cContainer = document.getElementById("chartContainer");
 let sContainer = document.getElementById("spreadsheetContainer");
-let uContainer = document.getElementById("usedCondition")
+let uContainer = document.getElementById("usedCondition");
+let vr = document.getElementById("valReference");
+let exVal = document.getElementById("exValue");
 let myChart = [];
 let gxdata = [];
 let gydata = [];
@@ -36,10 +38,10 @@ con.addEventListener('change', () => {
         uContainer.style.display = "flex";
         if (document.getElementById("criteria").value == "monthsUsed"){
             document.getElementById("refLabel").innerHTML = "Antigüedad en meses";
-            document.getElementById("valReference").placeholder = "Cantidad de meses";
+            vr.placeholder = "Cantidad de meses";
         } else {
             document.getElementById("refLabel").innerHTML = "Valor en estado nuevo";
-            document.getElementById("valReference").placeholder = "Valor en quetzales";
+            vr.placeholder = "Valor en quetzales";
         }
     }
     else {
@@ -50,10 +52,10 @@ con.addEventListener('change', () => {
 document.getElementById("criteria").addEventListener('change', ()=>{
     if (document.getElementById("criteria").value == "monthsUsed"){
         document.getElementById("refLabel").innerHTML = "Antigüedad en meses";
-        document.getElementById("valReference").placeholder = "Cantidad de meses";
+        vr.placeholder = "Cantidad de meses";
     } else {
         document.getElementById("refLabel").innerHTML = "Valor en estado nuevo";
-        document.getElementById("valReference").placeholder = "Valor en quetzales";
+        vr.placeholder = "Valor en quetzales";
     }
 });
 
@@ -65,12 +67,17 @@ list.addEventListener('change', ()=>{
 // Calculate action
 calc.addEventListener('click', () => {
 
+    // Display graph and table containers
     cContainer.style.display = "block";
     sContainer.style.display = "block";
 
+    // Scroll to graph
+    setTimeout(()=>{
+        cContainer.scrollIntoView({ behavior: 'smooth', block: 'start'});
+    }, 100);
+
     // Delete a any content created inside the spreadsheet  
     document.getElementById('spreadsheet').innerHTML = '';
-    gdata = [];
     
     // Declare variables for calculus based on data
     let dc = 1 - assetType[0].dc,
@@ -81,8 +88,9 @@ calc.addEventListener('click', () => {
     
     // Take form values
     let v = document.getElementById('value').value,
-        p = document.getElementById('months').value;
-
+        p = document.getElementById('months').value,
+        c = con.value,
+        ctr = document.getElementById("criteria");
 
     // data variable for table
     let data = [];
@@ -91,13 +99,49 @@ calc.addEventListener('click', () => {
     gxdata = [];
     gydata = [];
 
-    // Generate data and push it into the data variable
-    for (let i = 0; i <= p; i++) {
-        let pval = (di - dm) * Math.exp(-i * f) + dm;
-        let val = pval * v;
-        data.push([i, pval, val]);
-        gxdata.push(i);
-        gydata.push(val.toFixed(2));
+    // Check currency
+    if (select.value == "d"){
+        v = v * exVal.value;
+    }
+
+    // Condition action
+    if (con.value == "used"){
+        if (ctr.value == "monthsUsed"){
+
+            // Months used method
+            let mu = vr.value;
+            let dn = (di - dm) * Math.exp(-mu * f) + dm;
+            let vn = v/dn;
+            for (let i = 0; i <= p; i++) {
+                let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
+                let val = pval * vn;
+                data.push([i, pval, val]);
+                gxdata.push(i);
+                gydata.push(val.toFixed(2));
+            }
+        } else {
+            // Original value method
+            let vn = vr.value;
+            let dn = v/vn;
+            let mu = -Math.log((dn - dm)/(di - dm)) / f;
+            console.log(mu);
+            for (let i = 0; i <= p; i++) {
+                let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
+                let val = pval * vn;
+                data.push([i, pval, val]);
+                gxdata.push(i);
+                gydata.push(val.toFixed(2));
+            }
+        }
+    } else {
+        // Generate data and push it into the data variable - New
+        for (let i = 0; i <= p; i++) {
+            let pval = (di - dm) * Math.exp(-i * f) + dm;
+            let val = pval * v;
+            data.push([i, pval, val]);
+            gxdata.push(i);
+            gydata.push(val.toFixed(2));
+        }
     }
 
     // Generate the table
