@@ -80,16 +80,24 @@ calc.addEventListener('click', () => {
     document.getElementById('spreadsheet').innerHTML = '';
     
     // Declare variables for calculus based on data
-    let dc = 1 - assetType[0].dc,
-        di = 1 - assetType[0].di,
-        dm = 1 - assetType[0].dm,
-        m = assetType[0].months,
-        f = Math.log((di - dm) / (dc - dm)) / m;
+    let dc, di, dm, m, f, vu;
     
+    // Select parameters in Data.js
+    for (const type of assetType) {
+        if (list.value == type.name){
+            console.log(type.name);
+            dc = 1 - type.dc;
+            di = 1 - type.di;
+            dm = 1 - type.dm;
+            m = type.months;
+            vu = type.vue * 12;
+            f = Math.log((di - dm) / (dc - dm)) / m;
+        }
+    }
+
     // Take form values
     let v = document.getElementById('value').value,
         p = document.getElementById('months').value,
-        c = con.value,
         ctr = document.getElementById("criteria");
 
     // data variable for table
@@ -97,14 +105,15 @@ calc.addEventListener('click', () => {
 
     // data variable for graph
     gxdata = [];
-    gydata = [];
+    gydata[0] = [];
+    gydata[1] = [];
 
     // Check currency
     if (select.value == "d"){
         v = v * exVal.value;
     }
 
-    // Condition action
+    // Método exponencial
     if (con.value == "used"){
         if (ctr.value == "monthsUsed"){
 
@@ -117,7 +126,7 @@ calc.addEventListener('click', () => {
                 let val = pval * vn;
                 data.push([i, pval, val]);
                 gxdata.push(i);
-                gydata.push(val.toFixed(2));
+                gydata[0].push(val.toFixed(2));
             }
         } else {
             // Original value method
@@ -130,7 +139,7 @@ calc.addEventListener('click', () => {
                 let val = pval * vn;
                 data.push([i, pval, val]);
                 gxdata.push(i);
-                gydata.push(val.toFixed(2));
+                gydata[0].push(val.toFixed(2));
             }
         }
     } else {
@@ -140,11 +149,28 @@ calc.addEventListener('click', () => {
             let val = pval * v;
             data.push([i, pval, val]);
             gxdata.push(i);
-            gydata.push(val.toFixed(2));
+            gydata[0].push(val.toFixed(2));
         }
     }
 
-    // Generate the table
+    // Método de suma de dígitos
+    let sum = vu * (vu + 1) / 2;
+    console.log(sum)
+    let sumContador = 0;
+    for (let i = 0; i <= p; i++) {
+        sumContador += vu - i;
+        let pval = 1 - ((1 - dm) * sumContador / sum);
+        console.log(pval + ' ' + dm);
+        let val;
+        if (i > vu){
+            val = dm * v;
+        } else {
+            val = pval * v;
+        }
+        gydata[1].push(val.toFixed(2));
+    }
+    
+    /* ------------------------------ Create table ------------------------------ */
     jspreadsheet(document.getElementById('spreadsheet'), {
         data: data,
         columns: [
@@ -158,7 +184,8 @@ calc.addEventListener('click', () => {
     var graphArea = document.getElementById("chart").getContext("2d");
     if ('canvas' in myChart){
         myChart.data.labels = gxdata;
-        myChart.data.datasets[0].data = gydata;
+        myChart.data.datasets[0].data = gydata[0];
+        myChart.data.datasets[1].data = gydata[1];
         myChart.update();
     } else {
         myChart = new Chart(graphArea, {
@@ -167,9 +194,16 @@ calc.addEventListener('click', () => {
                 labels: gxdata,
                 datasets: [{
                     label: 'Método exponencial',
-                    data: gydata,
+                    data: gydata[0],
                     borderColor: '#1f3d64',
-                    backgroundColor: '#448454',
+                    backgroundColor: '#1f3d64',
+                    tension: 0.1
+                },
+                {
+                    label: 'Método suma digitos',
+                    data: gydata[1],
+                    borderColor: '#bbc446',
+                    backgroundColor: '#bbc446',
                     tension: 0.1
                 }]
             },

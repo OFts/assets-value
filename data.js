@@ -1,5 +1,77 @@
 var assetType = [
     {
+        "name":"Maquinaria amarilla",
+        "di": 0.25,
+        "months": 24,
+        "dc": 0.40,
+        "dm": 1.0,
+        "vue": 10,
+    },
+    {
+        "name":"Mquinaria agrícola",
+        "di": 0.10,
+        "months": 12,
+        "dc": 0.30,
+        "dm": 1.0,
+        "vue": 10,
+    },
+    {
+        "name":"Vehículos",
+        "di": 0.20,
+        "months": 12,
+        "dc": 0.28,
+        "dm": 0.87,
+        "vue": 6,
+    },
+    {
+        "name":"Transporte de carga",
+        "di": 0.15,
+        "months": 12,
+        "dc": 0.20,
+        "dm": 0.90,
+        "vue": 15,
+    },
+    {
+        "name":"Equipo de computo",
+        "di": 0.30,
+        "months": 12,
+        "dc": 0.44,
+        "dm": 1.0,
+        "vue": 5,
+    },
+    {
+        "name":"Equipo electrónico",
+        "di": 0.40,
+        "months": 12,
+        "dc": 0.50,
+        "dm": 1.0,
+        "vue": 5,
+    },
+    {
+        "name":"Equipo médico",
+        "di": 0.15,
+        "months": 24,
+        "dc": 0.35,
+        "dm": 0.8,
+        "vue": 8,
+    },
+    {
+        "name":"Redes de procesamiento de datos",
+        "di": 0.20,
+        "months": 12,
+        "dc": 0.37,
+        "dm": 1.0,
+        "vue": 5,
+    },
+    {
+        "name":"Software",
+        "di": 0.10,
+        "months": 12,
+        "dc": 0.15,
+        "dm": 1.0,
+        "vue": 5,
+    },
+    {
         "name":"Macbooks",
         "di": 0.33,
         "months": 36,
@@ -8,14 +80,5 @@ var assetType = [
         "vue": 5,
         "da": 0.17,
         "fp": 0.0152790649144242,
-    },
-    {
-        "name":"Maquinaria amarilla"
-    },
-    {
-        "name":"Vehículos"
-    },
-    {
-        "name":"Software"
     }
 ]

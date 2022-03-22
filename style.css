@@ -4,14 +4,11 @@ Verde: #bbc446
 Azul-verde: #448454
 */
 
-/* input[type=text] {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid black;
-    border-radius: 4px;
-} */
+@media print {
+    @page {
+      size: a3;
+    }
+}
 
 input[type=button], input[type=submit], input[type=reset] {
     background-color: #1f3d64;
@@ -34,11 +31,3 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     cursor: pointer;
     border-radius: 10px;
 }
-/* #assetTypes {
-    width: 50%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    border: 2px solid black;
-    border-radius: 4px;
-} */
