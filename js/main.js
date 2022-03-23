@@ -63,16 +63,7 @@ document.getElementById("criteria").addEventListener('change', ()=>{
 
 var ast = document.getElementsByClassName("info-a");
 
-for (const type of assetType) {
-    if (list.value == type.name){
-        ast[0].innerHTML = type.inf;
-        ast[1].innerHTML = type.di * 100;
-        ast[2].innerHTML = type.dm * 100;
-        ast[3].innerHTML = type.vue;
-    }
-}
-
-list.addEventListener('change', ()=>{
+function showAst() {
     for (const type of assetType) {
         if (list.value == type.name){
             ast[0].innerHTML = type.inf;
@@ -81,6 +72,12 @@ list.addEventListener('change', ()=>{
             ast[3].innerHTML = type.vue;
         }
     }
+}
+
+showAst();
+
+list.addEventListener('change', ()=>{
+    showAst();
 });
 
 // Calculate action
@@ -120,6 +117,8 @@ calc.addEventListener('click', () => {
 
     // data variable for table
     let data = [];
+    data[0] =[];
+    data[1] =[];
 
     // data variable for graph
     gxdata = [];
@@ -142,7 +141,7 @@ calc.addEventListener('click', () => {
             for (let i = 0; i <= p; i++) {
                 let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
                 let val = pval * vn;
-                data.push([i, pval, val]);
+                data[0].push([i, pval, val]);
                 gxdata.push(i);
                 gydata[0].push(val.toFixed(2));
             }
@@ -155,7 +154,7 @@ calc.addEventListener('click', () => {
             for (let i = 0; i <= p; i++) {
                 let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
                 let val = pval * vn;
-                data.push([i, pval, val]);
+                data[0].push([i, pval, val]);
                 gxdata.push(i);
                 gydata[0].push(val.toFixed(2));
             }
@@ -165,7 +164,7 @@ calc.addEventListener('click', () => {
         for (let i = 0; i <= p; i++) {
             let pval = (di - dm) * Math.exp(-i * f) + dm;
             let val = pval * v;
-            data.push([i, pval, val]);
+            data[0].push([i, pval, val]);
             gxdata.push(i);
             gydata[0].push(val.toFixed(2));
         }
@@ -184,11 +183,21 @@ calc.addEventListener('click', () => {
             val = pval * v;
         }
         gydata[1].push(val.toFixed(2));
+        data[1].push([i, pval, val]);
     }
     
     /* ------------------------------ Create table ------------------------------ */
     jspreadsheet(document.getElementById('spreadsheet'), {
-        data: data,
+        data: data[0],
+        columns: [
+            { type: 'text', title: 'Mes', width: 60 },
+            { type: 'numeric', title: 'Depreciación', width: 120, mask: '0%' },
+            { type: 'numeric', title: 'Valor', width: 150, mask: 'Q #,##0.00' },
+        ]
+    });
+
+    jspreadsheet(document.getElementById('spreadsheet-m1'), {
+        data: data[1],
         columns: [
             { type: 'text', title: 'Mes', width: 60 },
             { type: 'numeric', title: 'Depreciación', width: 120, mask: '0%' },
@@ -252,6 +261,18 @@ calc.addEventListener('click', () => {
             }
         });
     }
+});
+
+window.addEventListener('resize', ()=>{
+    if(window.innerWidth < 768){
+        myChart.options.maintainAspectRatio = false;
+        document.getElementById("miniChart").classList.add("eightyv");
+    } else {
+        myChart.options.maintainAspectRatio = true;
+        myChart.options.aspectRatio = 2;
+        document.getElementById("miniChart").classList.remove("eightyv");
+    }
+    myChart.reset();
 });
 
 /* -------------------------------- Accordion ------------------------------- */

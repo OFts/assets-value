@@ -44,7 +44,7 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 }
 
 .active, .accordion:hover {
-    background-color: #ccc;
+    background-color: rgb(209 213 219) !important;
 }
 
 .accordion:after {
@@ -63,4 +63,10 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
+}
+
+/* Chart container */
+
+.eightyv {
+    height: 80vh;
 }
