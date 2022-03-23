@@ -60,8 +60,27 @@ document.getElementById("criteria").addEventListener('change', ()=>{
 });
 
 // Show asset type info
-list.addEventListener('change', ()=>{
 
+var ast = document.getElementsByClassName("info-a");
+
+for (const type of assetType) {
+    if (list.value == type.name){
+        ast[0].innerHTML = type.inf;
+        ast[1].innerHTML = type.di * 100;
+        ast[2].innerHTML = type.dm * 100;
+        ast[3].innerHTML = type.vue;
+    }
+}
+
+list.addEventListener('change', ()=>{
+    for (const type of assetType) {
+        if (list.value == type.name){
+            ast[0].innerHTML = type.inf;
+            ast[1].innerHTML = type.di * 100;
+            ast[2].innerHTML = type.dm * 100;
+            ast[3].innerHTML = type.vue;
+        }
+    }
 });
 
 // Calculate action
@@ -237,3 +256,20 @@ calc.addEventListener('click', () => {
         });
     }
 });
+
+/* -------------------------------- Accordion ------------------------------- */
+
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight) {
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}

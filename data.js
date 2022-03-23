@@ -6,6 +6,7 @@ var assetType = [
         "dc": 0.40,
         "dm": 1.0,
         "vue": 10,
+        "inf": "El valor de la <b>maquinaria amarilla</b> depende principalmente de las horas de las horas de uso, porque lo que se recomienda el método de unidades de producción (en este caso horas). Para este tipo de equipo es importante el tener acceso a un sistema que permita controlar las horas de uso conforme el cliente trabaje el equipo. Con esta maquinaria se debe tener en cuenta su peso operativo y dimensiones, para garantizar que esta tenga un mercado secundario.",
     },
     {
         "name":"Mquinaria agrícola",
@@ -14,6 +15,7 @@ var assetType = [
         "dc": 0.30,
         "dm": 1.0,
         "vue": 10,
+        "inf": "El valor de la <b>maquinaria agrícola</b> depende principalmente de las horas de las horas de uso y su fabricante, porque lo que se recomienda el método de unidades de producción (en este caso horas). Equipos como tractores conforman principalmente este segmento. Son equipos que comúnmente poseen una baja rotación, por lo que no existe un fuerte mercado secundario para estos equipos. Los fabricantes principales son CASE, John Deere, Massey Ferguson, Kubota, entre otros.",
     },
     {
         "name":"Vehículos",
@@ -22,6 +24,7 @@ var assetType = [
         "dc": 0.28,
         "dm": 0.87,
         "vue": 6,
+        "inf": "El valor de los <b>vehículos partículares</b> depende principalmente del tipo de vehículo y su fabricante. Vehículos de fabricantes asiáticos como Toyota, Mazda, Isuzu y Hyundai tienen un fuerte mercado secundario. Con estos bienes es importante tener en cuenta el propósito y uso que tendrá el vehículo ya que su depreciación es alta.",
     },
     {
         "name":"Transporte de carga",
