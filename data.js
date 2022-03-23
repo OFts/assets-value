@@ -9,7 +9,7 @@ var assetType = [
         "inf": "El valor de la <b>maquinaria amarilla</b> depende principalmente de las horas de las horas de uso, porque lo que se recomienda el método de unidades de producción (en este caso horas). Para este tipo de equipo es importante el tener acceso a un sistema que permita controlar las horas de uso conforme el cliente trabaje el equipo. Con esta maquinaria se debe tener en cuenta su peso operativo y dimensiones, para garantizar que esta tenga un mercado secundario.",
     },
     {
-        "name":"Mquinaria agrícola",
+        "name":"Maquinaria agrícola",
         "di": 0.10,
         "months": 12,
         "dc": 0.30,

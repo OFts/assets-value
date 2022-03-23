@@ -104,7 +104,6 @@ calc.addEventListener('click', () => {
     // Select parameters in Data.js
     for (const type of assetType) {
         if (list.value == type.name){
-            console.log(type.name);
             dc = 1 - type.dc;
             di = 1 - type.di;
             dm = 1 - type.dm;
@@ -174,12 +173,10 @@ calc.addEventListener('click', () => {
 
     // Método de suma de dígitos
     let sum = vu * (vu + 1) / 2;
-    console.log(sum)
     let sumContador = 0;
     for (let i = 0; i <= p; i++) {
         sumContador += vu - i;
         let pval = 1 - ((1 - dm) * sumContador / sum);
-        console.log(pval + ' ' + dm);
         let val;
         if (i > vu){
             val = dm * v;
@@ -260,16 +257,39 @@ calc.addEventListener('click', () => {
 /* -------------------------------- Accordion ------------------------------- */
 
 var acc = document.getElementsByClassName("accordion");
-var i;
 
-for (i = 0; i < acc.length; i++) {
-  acc[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var panel = this.nextElementSibling;
+for (const acg of acc) {
+    if (acg.classList.contains("active")){
+        toggleAcc(acg);
+    }
+}
+acc[0].addEventListener("click", function() {
+    toggleAcc(this);
+});
+
+for (var i = 1; i < acc.length; i++) {
+    acc[i].addEventListener("click", function() {
+
+        var setClasses = !this.classList.contains('active');
+
+        for (var j = 1; j < acc.length; j++){
+            if (acc[j].classList.contains("active")){
+                toggleAcc(acc[j]);
+            }
+        }
+        if (setClasses) {
+            toggleAcc(this);
+        }
+    });
+}
+
+
+function toggleAcc (ack){
+    ack.classList.toggle("active");
+    let panel = ack.nextElementSibling;
     if (panel.style.maxHeight) {
-      panel.style.maxHeight = null;
+        panel.style.maxHeight = null;
     } else {
-      panel.style.maxHeight = panel.scrollHeight + "px";
-    } 
-  });
+        panel.style.maxHeight = panel.scrollHeight + "px";
+    }
 }
