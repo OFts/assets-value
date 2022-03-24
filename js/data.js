@@ -33,6 +33,7 @@ var assetType = [
         "dc": 0.20,
         "dm": 0.90,
         "vue": 15,
+        "inf": "El valor del <b>transporte de carga</b> depende principalmente del tipo de vehículo y su fabricante. La ventaja que posee el transporte de carga sobre el transporte particular se encuentra en que su vida útil es más prolongada. Y comúnmente está fabricado para soportar ciclos de trabajo más pesados. Con este tipo de transportes es importante conocer si posee elementos con fuerte presencia en el mercado, como el motor (el cual puede varia entre modelos).",
     },
     {
         "name":"Equipo de computo",
@@ -41,6 +42,7 @@ var assetType = [
         "dc": 0.44,
         "dm": 1.0,
         "vue": 5,
+        "inf": "El valor del <b>equipo de computo</b> posee una fuerte pérdida de valor en el tiempo debido a que estos se descontinuan con rapidez. Y son equipos que se reemplazan con frecuencia. Además se caracterizan por tener una depreciación inicial alta y por ser equipos dificilmente reparables (dependiendo del fabricante).",
     },
     {
         "name":"Equipo electrónico",
@@ -49,6 +51,7 @@ var assetType = [
         "dc": 0.50,
         "dm": 1.0,
         "vue": 5,
+        "inf": "El valor del <b>equipo electróncio</b> posee una fuerte pérdida de valor en el tiempo debido a que estos se descontinuan con rapidez. Y son equipos que se reemplazan con frecuencia según la aplicación que este tenga. Su pérdida de valor en el tiempo varía según el equipo. Sin embargo, en general equipos no industriales presentaran una fuerte pérdida de valor."
     },
     {
         "name":"Equipo médico",

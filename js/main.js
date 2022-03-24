@@ -314,20 +314,34 @@ calc.addEventListener('click', () => {
             }
         });
     }
+
+    if ('canvas' in myChart){
+        if(window.innerWidth < 768){
+            myChart.options.maintainAspectRatio = false;
+            document.getElementById("miniChart").classList.add("eightyv");
+        } else {
+            myChart.options.maintainAspectRatio = true;
+            myChart.options.aspectRatio = 2;
+            document.getElementById("miniChart").classList.remove("eightyv");
+        }
+        myChart.reset();
+    }
 });
 
 // Responsive function
 // Fix when is opened in a small screen
 window.addEventListener('resize', ()=>{
-    if(window.innerWidth < 768){
-        myChart.options.maintainAspectRatio = false;
-        document.getElementById("miniChart").classList.add("eightyv");
-    } else {
-        myChart.options.maintainAspectRatio = true;
-        myChart.options.aspectRatio = 2;
-        document.getElementById("miniChart").classList.remove("eightyv");
+    if ('canvas' in myChart){
+        if(window.innerWidth < 768){
+            myChart.options.maintainAspectRatio = false;
+            document.getElementById("miniChart").classList.add("eightyv");
+        } else {
+            myChart.options.maintainAspectRatio = true;
+            myChart.options.aspectRatio = 2;
+            document.getElementById("miniChart").classList.remove("eightyv");
+        }
+        myChart.reset();
     }
-    myChart.reset();
 });
 
 /* -------------------------------- Accordion ------------------------------- */
