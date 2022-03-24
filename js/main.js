@@ -119,11 +119,13 @@ calc.addEventListener('click', () => {
     let data = [];
     data[0] =[];
     data[1] =[];
-
+    data[2] =[];
+    
     // data variable for graph
     gxdata = [];
     gydata[0] = [];
     gydata[1] = [];
+    gydata[2] = [];
 
     // Check currency
     if (select.value == "d"){
@@ -185,7 +187,24 @@ calc.addEventListener('click', () => {
         gydata[1].push(val.toFixed(2));
         data[1].push([i, pval, val]);
     }
+
+    // Método lineal sin depreciación inicial
+    let da = (1 - dm) / vu; // Depreciaciión mensual
+    for (let i = 0; i <= p; i++){
+        let pval = 1 - (da * i);
+        console.log(pval);
+        let val;
+        if (i > vu){
+            val = dm * v;
+        } else {
+            val = pval * v;
+        }
+        gydata[2].push(val.toFixed(2));
+        data[2].push([i, pval, val]);
+    }
     
+    console.log(data[2]);
+
     /* ------------------------------ Create table ------------------------------ */
     jspreadsheet(document.getElementById('spreadsheet'), {
         data: data[0],
@@ -195,8 +214,17 @@ calc.addEventListener('click', () => {
             { type: 'numeric', title: 'Valor', width: 150, mask: 'Q #,##0.00' },
         ]
     });
-
+    
     jspreadsheet(document.getElementById('spreadsheet-m1'), {
+        data: data[2],
+        columns: [
+            { type: 'text', title: 'Mes', width: 60 },
+            { type: 'numeric', title: 'Depreciación', width: 120, mask: '0%' },
+            { type: 'numeric', title: 'Valor', width: 150, mask: 'Q #,##0.00' },
+        ]
+    });
+
+    jspreadsheet(document.getElementById('spreadsheet-m2'), {
         data: data[1],
         columns: [
             { type: 'text', title: 'Mes', width: 60 },
@@ -211,6 +239,7 @@ calc.addEventListener('click', () => {
         myChart.data.labels = gxdata;
         myChart.data.datasets[0].data = gydata[0];
         myChart.data.datasets[1].data = gydata[1];
+        myChart.data.datasets[2].data = gydata[2];
         myChart.update();
     } else {
         myChart = new Chart(graphArea, {
@@ -225,12 +254,20 @@ calc.addEventListener('click', () => {
                     tension: 0.1
                 },
                 {
-                    label: 'Método suma digitos',
+                    label: 'Método lineal',
+                    data: gydata[2],
+                    borderColor: '#ff5733 ',
+                    backgroundColor: '#ff5733 ',
+                    tension: 0.1
+                },
+                {
+                    label: 'Método decreciente',
                     data: gydata[1],
                     borderColor: '#bbc446',
                     backgroundColor: '#bbc446',
                     tension: 0.1
-                }]
+                },
+            ]
             },
             options: {
                 responsive: true,
@@ -263,6 +300,8 @@ calc.addEventListener('click', () => {
     }
 });
 
+// Responsive function
+// Fix when is opened in a small screen
 window.addEventListener('resize', ()=>{
     if(window.innerWidth < 768){
         myChart.options.maintainAspectRatio = false;

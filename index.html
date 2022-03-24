@@ -73,12 +73,12 @@ Developed by OFts🔥
             <div class="hidden w-full md:block md:w-auto" id="mobile-menu">
                 <ul class="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
                     <li>
-                        <a href="#"
+                        <a href="/"
                             class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-gray-700 md:p-0 md:hover:text-blue-700"
                             aria-current="page">Home</a>
                     </li>
                     <li>
-                        <a href="#"
+                        <a href="./guide.html"
                             class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 ">Guía</a>
                     </li>
                     <li>
@@ -284,7 +284,7 @@ Developed by OFts🔥
 
         </form>
 
-        <button id="calculate" class="block bg-blue-500 hover:bg-blue-400 text-white font-bold py-2 px-4 border-b-4 border-blue-700 hover:border-blue-500 rounded mb-6">
+        <button id="calculate" class="btn-cal uppercase block mt-4 w-full text-white font-bold py-3 px-6 rounded text-xl">
             Calcular
         </button>
 
@@ -292,9 +292,10 @@ Developed by OFts🔥
 
         
         <div id="chartContainer" class="hidden">
-            <h1 class="text-center text-3xl font-bold my-12 text-gray-700">
+            <h1 class="text-center text-3xl font-bold mt-20 mb-12 text-gray-700">
                 GRÁFICO DE VALOR
             </h1>
+            <p class="text-center">Esta figura describe el comportamiento del valor del activo en el tiempo.</p>
             <div id="miniChart">
                 <canvas id="chart"></canvas>
             </div>
@@ -303,7 +304,7 @@ Developed by OFts🔥
         <!-- -------------------------------- Table -------------------------------- -->
         
         <div id="spreadsheetContainer" class="hidden text-center">
-            <h1 class="text-center text-3xl font-bold my-12 text-gray-700">
+            <h1 class="text-center text-3xl font-bold mt-20 mb-12 text-gray-700">
                 TABLA DE VALOR
             </h1>
 
@@ -313,26 +314,18 @@ Developed by OFts🔥
                 <div id="spreadsheet" class="overflow-x-scroll max-w-full my-6"></div>
 
             </div>
-            <div class="accordion w-full bg-gray-200 text-gray-700 rounded py-3 px-4">MÉTODO DE LÍNEA RECTA</div>
+            <div class="accordion w-full bg-gray-200 text-gray-700 rounded py-3 px-4">MÉTODO LINEAL</div>
             <div class="panel bg-gray-100">
 
                 <div id="spreadsheet-m1" class="overflow-x-scroll max-w-full my-6"></div>
 
             </div>
-            <div class="accordion w-full bg-gray-200 text-gray-700 rounded py-3 px-4">MÉTODO DE DEPRECIACIÓN DECRECIENTE</div>
+            <div class="accordion w-full bg-gray-200 text-gray-700 rounded py-3 px-4">MÉTODO DECRECIENTE</div>
             <div class="panel bg-gray-100">
 
-                <div class="flex flex-wrap -mx-3">
-                    <div class="w-full md:w-1/2 px-3">
-                        <p class="info-a pb-0 md:pb-6 md:pr-0 p-6 text-gray-700 text-justify">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                    </div>
-                    <div class="w-full md:w-1/2 px-3 pt-6 min-h-full flex flex-col justify-center">
-                        <span> Lorem ipsum dolor sit amet consectetur adipisicing elit. Ea nihil laudantium doloremque quas. Blanditiis cumque, error nam dolorem earum accusamus iste quod itaque esse facilis quidem adipisci consequatur nisi? Unde.</span>
-                    </div>
-                </div>
+                <div id="spreadsheet-m2" class="overflow-x-scroll max-w-full my-6"></div>
 
             </div>
-            <!-- <div id="spreadsheet" class="overflow-scroll max-w-full"></div> -->
         </div>
 
 

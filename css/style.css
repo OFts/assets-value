@@ -70,3 +70,12 @@ input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
 .eightyv {
     height: 80vh;
 }
+
+/* Button style */
+.btn-cal {
+    background: #1f3d64;
+}
+
+.btn-cal:hover {
+    background: #bbc446;
+}
