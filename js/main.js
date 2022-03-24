@@ -94,7 +94,9 @@ calc.addEventListener('click', () => {
 
     // Delete a any content created inside the spreadsheet  
     document.getElementById('spreadsheet').innerHTML = '';
-    
+    document.getElementById('spreadsheet-m1').innerHTML = '';
+    document.getElementById('spreadsheet-m2').innerHTML = '';
+
     // Declare variables for calculus based on data
     let dc, di, dm, m, f, vu;
     
@@ -132,20 +134,27 @@ calc.addEventListener('click', () => {
         v = v * exVal.value;
     }
 
+    /* --------------------------- Métodos de cálculo --------------------------- */
+    let depRef = 1;
     // Método exponencial
     if (con.value == "used"){
         if (ctr.value == "monthsUsed"){
 
             // Months used method
             let mu = vr.value;
+            console.log(mu);
             let dn = (di - dm) * Math.exp(-mu * f) + dm;
             let vn = v/dn;
+            let pRef = (di - dm) * Math.exp((- mu) * f) + dm;
+            depRef = 1;
             for (let i = 0; i <= p; i++) {
                 let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
                 let val = pval * vn;
-                data[0].push([i, pval, val]);
+                pval = pval / pRef;
+                data[0].push([i, (depRef - pval), val]);
                 gxdata.push(i);
                 gydata[0].push(val.toFixed(2));
+                depRef = pval;
             }
         } else {
             // Original value method
@@ -153,28 +162,35 @@ calc.addEventListener('click', () => {
             let dn = v/vn;
             let mu = -Math.log((dn - dm)/(di - dm)) / f;
             console.log(mu);
+            let pRef = (di - dm) * Math.exp((- mu) * f) + dm;
+            depRef = 1;
             for (let i = 0; i <= p; i++) {
                 let pval = (di - dm) * Math.exp((-i - mu) * f) + dm;
                 let val = pval * vn;
-                data[0].push([i, pval, val]);
+                pval = pval / pRef;
+                data[0].push([i, (depRef - pval), val]);
                 gxdata.push(i);
                 gydata[0].push(val.toFixed(2));
+                depRef = pval;
             }
         }
     } else {
         // Generate data and push it into the data variable - New
+        depRef = 1;
         for (let i = 0; i <= p; i++) {
             let pval = (di - dm) * Math.exp(-i * f) + dm;
             let val = pval * v;
-            data[0].push([i, pval, val]);
+            data[0].push([i, (depRef - pval), val]);
             gxdata.push(i);
             gydata[0].push(val.toFixed(2));
+            depRef = pval;
         }
     }
 
     // Método de suma de dígitos
     let sum = vu * (vu + 1) / 2;
     let sumContador = 0;
+    depRef = 1;
     for (let i = 0; i <= p; i++) {
         sumContador += vu - i;
         let pval = 1 - ((1 - dm) * sumContador / sum);
@@ -185,14 +201,15 @@ calc.addEventListener('click', () => {
             val = pval * v;
         }
         gydata[1].push(val.toFixed(2));
-        data[1].push([i, pval, val]);
+        data[1].push([i, (depRef - pval), val]);
+        depRef = pval;
     }
 
     // Método lineal sin depreciación inicial
     let da = (1 - dm) / vu; // Depreciaciión mensual
+    depRef = 1;
     for (let i = 0; i <= p; i++){
         let pval = 1 - (da * i);
-        console.log(pval);
         let val;
         if (i > vu){
             val = dm * v;
@@ -200,10 +217,9 @@ calc.addEventListener('click', () => {
             val = pval * v;
         }
         gydata[2].push(val.toFixed(2));
-        data[2].push([i, pval, val]);
+        data[2].push([i, (depRef - pval), val]);
+        depRef = pval;
     }
-    
-    console.log(data[2]);
 
     /* ------------------------------ Create table ------------------------------ */
     jspreadsheet(document.getElementById('spreadsheet'), {
